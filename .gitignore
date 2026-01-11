@@ -1,0 +1,14 @@
+.cursor/
+.vscode/
+*.log
+node_modules/
+dist/
+build/
+bin/
+obj/
+*.pdf
+*.xmind
+*.png
+*.jpg
+*.jpeg
+*.gif
