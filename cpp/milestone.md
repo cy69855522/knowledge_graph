@@ -5,7 +5,7 @@
 ## 类型推导
 
 - [X] P0:Item 1:理解模板类型推导
-- [ ] P0:Item 2:理解auto类型推导
+- [X] P0:Item 2:理解auto类型推导
 - [ ] P1:Item 3:理解decltype
 - [ ] P2:Item 4:学会查看类型推导结果
 

@@ -1,4 +1,3 @@
-reference/
 .cursor/
 .vscode/
 *.log
@@ -13,3 +12,4 @@ obj/
 *.jpg
 *.jpeg
 *.gif
+reference/

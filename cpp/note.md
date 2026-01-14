@@ -21,3 +21,6 @@
     ```
 
 - **std::forward**: `std::forward<T>` 根据 `T` 的身份保留原始参数的左值/右，这是完美转发的关键：值特性。
+
+# Item 2: 理解auto类型推导
+- 在 auto 推导中，花括号会被特殊处理为 std::initializer_list，这是与模板推导的唯一区别。🎯
