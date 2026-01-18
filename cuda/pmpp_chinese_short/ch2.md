@@ -1,10 +1,10 @@
-# 第二章：异构数据并行计算
+# 第二章：异构数据并行计算 🏗️
 
-## 2.1 数据并行性
+## 2.1 数据并行性 📊
 
 **数据并行 (Data parallelism)**：在数据集的不同部分上执行的计算可以独立并行执行。
 
-**示例：彩色转灰度**
+**示例：彩色转灰度** 🖼️
 
 $$
 L = 0.21r + 0.72g + 0.07b
@@ -12,18 +12,18 @@ $$
 
 每个像素的计算独立，可并行执行——这就是数据并行性的基础。
 
-## 2.2 CUDA C 程序结构
+## 2.2 CUDA C 程序结构 🔄
 
 CUDA 程序执行流程：
-1. **主机代码** (CPU) 开始执行
-2. 调用**内核函数 (Kernel)** 在设备 (GPU) 上启动**线程网格 (Grid)**
+1. **主机代码** (CPU) 开始执行 🖥️
+2. 调用**内核函数 (Kernel)** 在设备 (GPU) 上启动**线程网格 (Grid)** 🧠
 3. 网格执行完毕后返回主机继续执行
 
 ```
 Host Code → Kernel Launch → Grid Execution → Host Code → ...
 ```
 
-## 2.3 向量加法内核
+## 2.3 向量加法内核 🔢
 
 ### 传统 C 代码
 ```cpp
@@ -34,26 +34,26 @@ void vecAdd(float* A_h, float* B_h, float* C_h, int n) {
 }
 ```
 
-### CUDA 并行化结构
+### CUDA 并行化结构 🛠️
 ```
-Part 1: 分配设备内存，拷贝数据到设备
+Part 1: 分配设备内存，拷贝数据到设备 (Host → Device)
 Part 2: 调用 Kernel
-Part 3: 拷贝结果回主机，释放设备内存
+Part 3: 拷贝结果回主机，释放设备内存 (Device → Host)
 ```
 
-## 2.4 设备全局内存和数据传输
+## 2.4 设备全局内存和数据传输 💾
 
 ### 内存分配与释放
 ```cpp
 float *A_d;
-cudaMalloc((void**)&A_d, size);  // 分配设备内存
-cudaFree(A_d);                   // 释放设备内存
+cudaMalloc((void**)&A_d, size);  // 分配设备内存 🟢
+cudaFree(A_d);                   // 释放设备内存 🔴
 ```
 
 ### 数据传输
 ```cpp
-cudaMemcpy(A_d, A_h, size, cudaMemcpyHostToDevice);  // Host → Device
-cudaMemcpy(C_h, C_d, size, cudaMemcpyDeviceToHost);  // Device → Host
+cudaMemcpy(A_d, A_h, size, cudaMemcpyHostToDevice);  // Host → Device 📤
+cudaMemcpy(C_h, C_d, size, cudaMemcpyDeviceToHost);  // Device → Host 📥
 ```
 
 ### 完整示例
@@ -77,7 +77,7 @@ void vecAdd(float* A_h, float* B_h, float* C_h, int n) {
 }
 ```
 
-### 错误检查
+### 错误检查 ⚠️
 ```cpp
 cudaError_t err = cudaMalloc((void**)&A_d, size);
 if (err != cudaSuccess) {
@@ -86,13 +86,13 @@ if (err != cudaSuccess) {
 }
 ```
 
-## 2.5 核函数和线程
+## 2.5 核函数和线程 🧠
 
-### 线程组织：两级层次结构
+### 线程组织：两级层次结构 🪜
 - **Grid (网格)**：由多个 Block 组成
 - **Block (块)**：由多个 Thread 组成（最多 1024 个线程）
 
-### 内建变量
+### 内建变量 🔑
 | 变量 | 含义 |
 |------|------|
 | `threadIdx.x` | 线程在块内的索引 |
@@ -100,7 +100,7 @@ if (err != cudaSuccess) {
 | `blockDim.x` | 每个块的线程数 |
 | `gridDim.x` | 网格中的块数 |
 
-### 计算全局索引
+### 计算全局索引 📍
 ```cpp
 int i = blockIdx.x * blockDim.x + threadIdx.x;
 ```
@@ -110,7 +110,7 @@ int i = blockIdx.x * blockDim.x + threadIdx.x;
 - Block 1: i = 256~511
 - Block 2: i = 512~767
 
-### 向量加法 Kernel
+### 向量加法 Kernel 🧪
 ```cpp
 __global__ void vecAddKernel(float* A, float* B, float* C, int n) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -120,19 +120,19 @@ __global__ void vecAddKernel(float* A, float* B, float* C, int n) {
 }
 ```
 
-**关键点**：
+**关键点** ✨：
 - `__global__` 声明这是一个 Kernel 函数
 - `if (i < n)` 处理线程数不是块大小整数倍的情况
-- 每个线程处理一个元素，**循环被线程网格替代**
+- 每个线程处理一个元素，**循环被线程网格替代** 🚀
 
-### 函数声明关键字
+### 函数声明关键字 🏷️
 | 关键字 | 执行位置 | 调用位置 |
 |--------|----------|----------|
-| `__global__` | Device | Host (或 Device，动态并行) |
-| `__device__` | Device | Device |
-| `__host__` | Host | Host |
+| `__global__` | Device 🎮 | Host 🖥️ |
+| `__device__` | Device 🎮 | Device 🎮 |
+| `__host__` | Host 🖥️ | Host 🖥️ |
 
-## 2.6 调用核函数
+## 2.6 调用核函数 🚀
 
 ### 执行配置语法
 ```cpp
@@ -149,9 +149,9 @@ vecAddKernel<<<numBlocks, threadsPerBlock>>>(A_d, B_d, C_d, n);
 **示例**：n = 1000
 - numBlocks = ceil(1000/256) = 4
 - 总线程数 = 4 × 256 = 1024
-- 前 1000 个线程执行加法，后 24 个被 `if (i < n)` 过滤
+- 前 1000 个线程执行加法，后 24 个被 `if (i < n)` 过滤 🛡️
 
-## 2.7 编译
+## 2.7 编译 🔨
 
 ```bash
 nvcc program.cu -o program
@@ -159,16 +159,16 @@ nvcc program.cu -o program
 
 NVCC 编译器：
 1. 分离主机代码和设备代码
-2. 主机代码 → 标准 C/C++ 编译器
-3. 设备代码 → PTX (中间表示) → GPU 目标代码
+2. 主机代码 → 标准 C/C++ 编译器 🖥️
+3. 设备代码 → PTX (中间表示) → GPU 目标代码 🎮
 
-## 2.8 核心总结
+## 2.8 核心总结 💡
 
 | 概念 | API/语法 |
 |------|----------|
-| 内存分配 | `cudaMalloc()` |
-| 内存释放 | `cudaFree()` |
-| 数据传输 | `cudaMemcpy()` |
-| Kernel 声明 | `__global__` |
-| Kernel 调用 | `<<<blocks, threads>>>` |
-| 线程索引 | `threadIdx`, `blockIdx`, `blockDim` |
+| 内存分配 | `cudaMalloc()` 🟢 |
+| 内存释放 | `cudaFree()` 🔴 |
+| 数据传输 | `cudaMemcpy()` 🔄 |
+| Kernel 声明 | `__global__` 🧠 |
+| Kernel 调用 | `<<<blocks, threads>>>` 🚀 |
+| 线程索引 | `threadIdx`, `blockIdx`, `blockDim` 📍 |
