@@ -16,10 +16,10 @@
 
 ## 移步现代C++
 
-- [ ] P2:Item 7:区别使用()和{}创建对象
-- [ ] P0:Item 8:优先考虑nullptr而非0和NULL
-- [ ] P1:Item 9:优先考虑别名声明而非typedefs
-- [ ] P1:Item 10:优先考虑限域枚举而非未限域枚举
+- [X] P2:Item 7:区别使用()和{}创建对象
+- [X] P0:Item 8:优先考虑nullptr而非0和NULL
+- [X] P1:Item 9:优先考虑别名声明而非typedefs
+- [X] P1:Item 10:优先考虑限域枚举而非未限域枚举
 - [ ] P0:Item 11:优先考虑使用deleted函数而非使用未定义的私有声明
 - [ ] P0:Item 12:使用override声明重写函数
 - [ ] P2:Item 13:优先考虑const_iterator而非iterator
