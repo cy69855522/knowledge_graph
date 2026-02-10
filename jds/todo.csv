@@ -1,0 +1,17 @@
+优先级,模块,核心知识点 (The What),复习执行动作 (The How),面试应对场景 (The Why)
+P0 (严守),生物黑客,甲状腺修复协议,"1. 23:00 强制关机 (修复免疫)。2. 赤脚踩沙滩 40min (早/晚，抗炎)。3. 饮食复读机：严禁吃蛋/糖。",活着赚 1000w。 保持大脑无雾，面试反应快。
+P0 (复用),公司技术演讲,DeepSeek-V3 & MLA (推理性能优化),"1. 做 PPT： 讲清楚 MLA (Multi-Head Latent Attention) 如何通过低秩压缩减少 KV Cache。2. 对比： MHA vs MLA 的显存占用与吞吐量差异。3. 结论： 它是解决“显存墙”的关键。",“你关注前沿技术吗？”“我最近深度研究了 DeepSeek 的架构，特别是 MLA 对 Infra 吞吐量的提升...” (瞬间拉高 Level)
+P0 (必考),分布式并行,Megatron-LM (TP) & Pipeline (PP),"1. 画图： 默写 TP 的 Row/Col 切分方式，标出 f/g 算子位置。2. 算数： 搞懂 1F1B 流水线调度，背诵气泡率公式：(P−1)/M。",“请在白板上画一下 Megatron 切分？流水线气泡怎么消除？”
+P0 (必考),显存优化,DeepSpeed ZeRO 体系,"1. 画图： 画出 ZeRO-1/2/3 的显存分布金字塔（参数/梯度/优化器）。2. 理解： ZeRO-Offload 是怎么利用 CPU 内存和 NVMe 的。",“训练千亿模型显存不够怎么办？ZeRO-3 会增加通信量吗？”
+P0 (必考),通信原语,NCCL 集合通信,"看图： 搞懂 All-Reduce, All-Gather, Reduce-Scatter 的区别。知道 Ring 和 Tree 算法的基本概念。",“DDP 用的是哪种通信原语？TP 用的是哪种？”
+P1 (实战),工作交接,模型量化 (Int8/AWQ) (变废为宝),"1. 跑 Demo： 用 vLLM/AutoGPTQ 做 Int8 量化。2. 记数据： 记录 FP16 vs Int8 的显存减少量 (e.g., 24G->14G) 和延迟变化。3. 写简历： 包装成“推理性能优化项目”。",“你有过落地的性能优化经验吗？”“有，我曾通过 Int8 量化将生产环境模型的吞吐提升了 40%。”
+P1 (技能),性能分析,Nsight Systems (nsys),"1. 看图： 找 Timeline 案例，识别 Compute (计算)、Communication (通信)、Idle (瓶颈)。2. 理解： 什么是 Overlap (掩盖) 以及如何看图识别它。",“你是怎么定位训练瓶颈的？”“我习惯用 nsys 看流多处理器的占用和通信的 Overlap 情况。”
+P1 (技能),PyTorch 扩展,Custom C++ Extensions (胶水层),"1. 看文档： 浏览 TORCH_LIBRARY, pybind11 和 JIT Load 机制。2. 理解流程： 知道怎么把 C++ 算子包一层 Python 壳，以及如何注册。",“如何把高性能算子接入 PyTorch？”“我熟悉 PyTorch 的算子注册和 Extension 机制，能解决最后一公里集成。”
+P1 (原理),计算图机制,Autograd & DDP,"1. 理解 Autograd： 搞懂 Node/Edge 关系，知道如何用 backward hooks 调试梯度。2. 理解 DDP： 为什么要用 Bucket（桶）打包梯度？怎么做计算通信重叠？",“如果梯度爆炸了怎么定位？DDP 的通信开销大吗？”
+P1 (谈资),前沿黑话,FlashAttn & vLLM,"1. FlashAttn： 背诵 Tiling (分块) + IO-Aware (减少 HBM 访问)。2. vLLM： 搞懂 PagedAttention 如何解决 KV Cache 碎片。",“FlashAttention 为什么快？推理显存瓶颈在哪？”
+P1 (情报),面试情报,真题收集 (定向爆破),"1. 搜： 小红书/牛客搜“PJLab/腾讯 Infra 面经”。2. 理： 建 Excel，标红不会的题。3. 学： 针对标红题目定向复习。",不做无用功。 确保复习的每一个点都是考点。
+P1 (经验),内部挖宝,公司内部 PPT 复盘,"1. 翻旧账： 找训练/部署组以前的 PPT。2. 记坑点： OOM 怎么解的？Loss Spike 怎么查的？3. 内化： 把同事的经验变成你的经验。",“遇到过什么棘手的故障？”“无论是显存碎片导致的 OOM 还是通信死锁，我都有一套排查 SOP...”
+P2 (防守),CUDA 急救,Tiled GEMM (矩阵乘法) & 黑话,"1. 默写 3 遍： __shared__ 声明、__syncthreads()、分块搬运循环（只默写不上机）。2. 背黑话： Warp Divergence, Bank Conflict, Coalescing, Occupancy。",“手写一个简单的 Kernel。”“你的 Kernel 跑不快可能是什么原因？”
+P2 (防守),C++ 基础,智能指针 & 移动语义,"理解： shared_ptr (引用计数原理), unique_ptr (独占)。std::move (所有权转移 = Zero-Copy)。",“在管理 Tensor 生命周期时，你是怎么避免显存泄漏和深拷贝的？”
+P2 (捡漏),国产适配,智源特供,"对齐： NCCL -> HCCL (华为)；CUDA -> CANN (华为)。知道本质是 API 映射和精度对齐。",“你有国产卡经验吗？”（答：没有，但我懂通信原语，迁移很快。）
+P2 (辅助),外部资料,买题库,"1. 淘宝/咸鱼： 搜“大模型 Infra 面试题”。2. 刷题： 只看题目，查漏补缺。",防止出现知识盲区，买个心理安慰。
