@@ -1,0 +1,4 @@
+tts:
+  voice: "zh-CN-XiaoxiaoNeural"  # Microsoft Edge TTS Voice
+  rate: "+0%"                    # Speed adjustment (e.g., +10%, -10%)
+  volume: "+0%"                  # Volume adjustment

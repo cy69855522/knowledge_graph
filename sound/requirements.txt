@@ -1,0 +1,7 @@
+PyQt6
+markdown
+edge-tts
+pygame
+pyyaml
+nest_asyncio
+mutagen
