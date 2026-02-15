@@ -1,20 +1,20 @@
 状态,优先级,模块,核心知识点 (The What),复习执行动作 (The How),面试应对场景 (The Why)
 状态,优先级,模块,核心知识点 (The What),复习执行动作 (The How),面试应对场景 (The Why)
-Done,P0 (严守),生物黑客,甲状腺修复协议,"1. 23:00 强制关机 (修复免疫)。2. 赤脚踩沙滩 40min (早/晚，抗炎)。3. 饮食复读机：严禁吃蛋/糖。",活着赚 1000w。 保持大脑无雾，面试反应快。
-,P0 (核心),推理引擎,vLLM & PagedAttention (JD必考),"1. 原理： 彻底搞懂 PagedAttention 怎么解决 KV Cache 显存碎片（类比操作系统的虚拟内存）。2. 实战： 跑通 vLLM 的 Quickstart，看懂 BlockManager 的代码逻辑。",“vLLM 为什么比 HuggingFace 快？”“请讲一下 PagedAttention 的内存管理机制。”
-,P0 (核心),加速框架,TensorRT-LLM & Triton (JD必考),"1. 架构： 理解 TRT-LLM 的分层（Python 前端 -> C++ Runtime）。2. 部署： 了解 NVIDIA Triton Inference Server 怎么管理模型仓 (Model Repository) 和并发请求 (Concurrent Requests)。",“如何把 PyTorch 模型转成 TensorRT engine？”“Triton 怎么做负载均衡？”
-,P0 (必考),显存魔法,KV Cache 优化 & MLA,"1. 结合 DeepSeek： 讲清楚 MLA (Multi-Head Latent Attention) 如何通过低秩压缩减少 KV Cache。2. 算数： 会算 KV Cache 的显存占用公式：2 * b * s * h * l。",“推理长文本时显存爆炸怎么办？”“DeepSeek 的 MLA 对推理有什么好处？”
-,P0 (必考),量化技术,Int8 / AWQ / GPTQ (变废为宝),"1. 对比： AWQ (激活感知) vs GPTQ (逐层重构) 的区别。2. 实战： 跑一个量化 Demo，记录显存节省比例。3. 结合CV： 提一下你以前做 CV 模型量化的经验（PTQ/QAT）。",“你有过落地的性能优化经验吗？”“量化对精度影响大吗？怎么弥补？”
-,P1 (调度),服务优化,Dynamic Batching (动态批处理),"1. 概念： 区别 Static Batching (等齐了再跑) vs Continuous Batching (随到随跑，vLLM 核心)。2. 话术： 准备一个比喻（像是公交车 vs 拼车）。",“如何提升推理服务的吞吐量 (Throughput)？”“什么是 Iteration-level scheduling？”
-,P1 (并行),模型切分,Megatron-LM (TP Only),"1. 聚焦推理： 只看 Tensor Parallel (TP) 在推理时怎么切分权重（列切/行切）。2. 通信： 知道 TP 推理在每一层结束后需要 All-Reduce。3. 忽略训练： 不看流水线气泡。",“70B 的模型一张卡放不下，推理时怎么切？”“TP 通信发生在哪些算子之间？”
-,P1 (谈资),前沿技术,Speculative Decoding (投机采样),"1. 原理： 用小模型（Draft Model）快速生成，大模型（Target Model）验证。2. 场景： 知道这适合“访存密集型”场景，能提升延迟。",“JD 里提到的‘投机预测’你了解吗？”
-,P1 (技能),性能分析,Nsight Systems (nsys) 推理版,"1. 侧重： 关注 Kernel Launch Overhead 和 KV Cache 读取延迟。2. 话术： “我用 nsys 分析发现主要瓶颈在 Attention 的 Memory Bound...”",“怎么定位推理延迟过高的问题？”
-,P1 (防守),C++ 基础,Python Binding (胶水层),"1. 重点： pybind11 怎么把 C++ 算子暴露给 Python。2. 策略： 不用精通 C++ STL，但要懂怎么写 extension。",“vLLM 底层是 C++ 写的，你看得懂吗？”
-,P1 (经验),内部挖宝,公司内部 PPT 复盘,"1. 翻旧账： 找部署组以前的 PPT。2. 记坑点： OOM 怎么解的？Latency Spike 怎么查的？3. 内化： 把同事的经验变成你的经验。",“遇到过什么棘手的故障？”“无论是显存碎片导致的 OOM 还是长文本推理变慢，我都有一套排查 SOP...”
-,P2 (辅助),国产适配,国产卡推理现状,"1. 了解： 华为昇腾用 MindIE，海光用 DTK。2. 话术： “虽然我主要用 NV，但推理原理（算子融合、量化）在国产卡上是通用的。”",“我们也要做国产卡适配，你有概念吗？”
-,P2 (谈资),前沿黑话,FlashAttn 原理,"1. FlashAttn： 背诵 Tiling (分块) + IO-Aware (减少 HBM 访问)。2. 关联： 知道 vLLM 和 TRT-LLM 底层都集成了 FlashAttn。",“FlashAttention 为什么快？推理显存瓶颈在哪？”
-
-
+Done,P0 (严守),生物黑客,甲状腺修复协议,1. 23:00 强制关机 (修复免疫)。2. 赤脚踩沙滩 40min (早/晚，抗炎)。3. 饮食复读机：严禁吃蛋/糖。,活着赚 1000w。 保持大脑无雾，面试反应快。
+,P0 (核心),推理引擎,vLLM & PagedAttention (JD必考),1. 原理： 彻底搞懂 PagedAttention 怎么解决 KV Cache 显存碎片（类比操作系统的虚拟内存）。2. 实战： 跑通 vLLM 的 Quickstart，看懂 BlockManager 的代码逻辑。,“vLLM 为什么比 HuggingFace 快？”“请讲一下 PagedAttention 的内存管理机制。”
+,P0 (核心),加速框架,TensorRT-LLM & Triton (JD必考),1. 架构： 理解 TRT-LLM 的分层（Python 前端 -> C++ Runtime）。2. 部署： 了解 NVIDIA Triton Inference Server 怎么管理模型仓 (Model Repository) 和并发请求 (Concurrent Requests)。,“如何把 PyTorch 模型转成 TensorRT engine？”“Triton 怎么做负载均衡？”
+,P0 (必考),显存魔法,KV Cache 优化 & MLA,1. 结合 DeepSeek： 讲清楚 MLA (Multi-Head Latent Attention) 如何通过低秩压缩减少 KV Cache。2. 算数： 会算 KV Cache 的显存占用公式：2 * b * s * h * l。,“推理长文本时显存爆炸怎么办？”“DeepSeek 的 MLA 对推理有什么好处？”
+,P0 (必考),量化技术,Int8 / AWQ / GPTQ (变废为宝),1. 对比： AWQ (激活感知) vs GPTQ (逐层重构) 的区别。2. 实战： 跑一个量化 Demo，记录显存节省比例。3. 结合CV： 提一下你以前做 CV 模型量化的经验（PTQ/QAT）。,“你有过落地的性能优化经验吗？”“量化对精度影响大吗？怎么弥补？”
+,P1 (调度),服务优化,Dynamic Batching (动态批处理),1. 概念： 区别 Static Batching (等齐了再跑) vs Continuous Batching (随到随跑，vLLM 核心)。2. 话术： 准备一个比喻（像是公交车 vs 拼车）。,“如何提升推理服务的吞吐量 (Throughput)？”“什么是 Iteration-level scheduling？”
+Done,P1 (并行),模型切分,Megatron-LM (TP Only),1. 聚焦推理： 只看 Tensor Parallel (TP) 在推理时怎么切分权重（列切/行切）。2. 通信： 知道 TP 推理在每一层结束后需要 All-Reduce。3. 忽略训练： 不看流水线气泡。,“70B 的模型一张卡放不下，推理时怎么切？”“TP 通信发生在哪些算子之间？”
+,P1 (谈资),前沿技术,Speculative Decoding (投机采样),1. 原理： 用小模型（Draft Model）快速生成，大模型（Target Model）验证。2. 场景： 知道这适合“访存密集型”场景，能提升延迟。,“JD 里提到的‘投机预测’你了解吗？”
+,P1 (技能),性能分析,Nsight Systems (nsys) 推理版,1. 侧重： 关注 Kernel Launch Overhead 和 KV Cache 读取延迟。2. 话术： “我用 nsys 分析发现主要瓶颈在 Attention 的 Memory Bound...”,“怎么定位推理延迟过高的问题？”
+,P1 (防守),C++ 基础,Python Binding (胶水层),1. 重点： pybind11 怎么把 C++ 算子暴露给 Python。2. 策略： 不用精通 C++ STL，但要懂怎么写 extension。,“vLLM 底层是 C++ 写的，你看得懂吗？”
+,P1 (经验),内部挖宝,公司内部 PPT 复盘,1. 翻旧账： 找部署组以前的 PPT。2. 记坑点： OOM 怎么解的？Latency Spike 怎么查的？3. 内化： 把同事的经验变成你的经验。,“遇到过什么棘手的故障？”“无论是显存碎片导致的 OOM 还是长文本推理变慢，我都有一套排查 SOP...”
+,P2 (辅助),国产适配,国产卡推理现状,1. 了解： 华为昇腾用 MindIE，海光用 DTK。2. 话术： “虽然我主要用 NV，但推理原理（算子融合、量化）在国产卡上是通用的。”,“我们也要做国产卡适配，你有概念吗？”
+,P2 (谈资),前沿黑话,FlashAttn 原理,1. FlashAttn： 背诵 Tiling (分块) + IO-Aware (减少 HBM 访问)。2. 关联： 知道 vLLM 和 TRT-LLM 底层都集成了 FlashAttn。,“FlashAttention 为什么快？推理显存瓶颈在哪？”
+,,,,,
+,,,,,
 ,P2 (复用),公司技术演讲,DeepSeek-V3 & MLA (推理性能优化),1. 做 PPT： 讲清楚 MLA (Multi-Head Latent Attention) 如何通过低秩压缩减少 KV Cache。2. 对比： MHA vs MLA 的显存占用与吞吐量差异。3. 结论： 它是解决“显存墙”的关键。,“你关注前沿技术吗？”“我最近深度研究了 DeepSeek 的架构，特别是 MLA 对 Infra 吞吐量的提升...” (瞬间拉高 Level)
 ,P2 (技能),分布式并行,Megatron-LM (TP) & Pipeline (PP),1. 画图： 默写 TP 的 Row/Col 切分方式，标出 f/g 算子位置。2. 算数： 搞懂 1F1B 流水线调度，背诵气泡率公式：(P−1)/M。,“请在白板上画一下 Megatron 切分？流水线气泡怎么消除？”
 ,P2 (技能),显存优化,DeepSpeed ZeRO 体系,1. 画图： 画出 ZeRO-1/2/3 的显存分布金字塔（参数/梯度/优化器）。2. 理解： ZeRO-Offload 是怎么利用 CPU 内存和 NVMe 的。,“训练千亿模型显存不够怎么办？ZeRO-3 会增加通信量吗？”
