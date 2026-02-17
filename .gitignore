@@ -8,8 +8,4 @@ bin/
 obj/
 *.pdf
 *.xmind
-*.png
-*.jpg
-*.jpeg
-*.gif
 reference/
