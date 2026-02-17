@@ -4,8 +4,8 @@ Done,P0 (严守),生物黑客,甲状腺修复协议,1. 23:00 强制关机 (修�
 Done,P0 (核心),推理引擎,vLLM & PagedAttention (JD必考),1. 原理： 彻底搞懂 PagedAttention 怎么解决 KV Cache 显存碎片（类比操作系统的虚拟内存）。2. 实战： 跑通 vLLM 的 Quickstart，看懂 BlockManager 的代码逻辑。,“vLLM 为什么比 HuggingFace 快？”“请讲一下 PagedAttention 的内存管理机制。”
 ,P0 (核心),加速框架,TensorRT-LLM & Triton (JD必考),1. 架构： 理解 TRT-LLM 的分层（Python 前端 -> C++ Runtime）。2. 部署： 了解 NVIDIA Triton Inference Server 怎么管理模型仓 (Model Repository) 和并发请求 (Concurrent Requests)。,“如何把 PyTorch 模型转成 TensorRT engine？”“Triton 怎么做负载均衡？”
 Done,P0 (必考),显存魔法,KV Cache 优化 & MLA,1. 结合 DeepSeek： 讲清楚 MLA (Multi-Head Latent Attention) 如何通过低秩压缩减少 KV Cache。2. 算数： 会算 KV Cache 的显存占用公式：2 * b * s * h * l。,“推理长文本时显存爆炸怎么办？”“DeepSeek 的 MLA 对推理有什么好处？”
-,P0 (必考),量化技术,Int8 / AWQ / GPTQ (变废为宝),1. 对比： AWQ (激活感知) vs GPTQ (逐层重构) 的区别。2. 实战： 跑一个量化 Demo，记录显存节省比例。3. 结合CV： 提一下你以前做 CV 模型量化的经验（PTQ/QAT）。,“你有过落地的性能优化经验吗？”“量化对精度影响大吗？怎么弥补？”
-,P1 (调度),服务优化,Dynamic Batching (动态批处理),1. 概念： 区别 Static Batching (等齐了再跑) vs Continuous Batching (随到随跑，vLLM 核心)。2. 话术： 准备一个比喻（像是公交车 vs 拼车）。,“如何提升推理服务的吞吐量 (Throughput)？”“什么是 Iteration-level scheduling？”
+Done,P0 (必考),量化技术,Int8 / AWQ / GPTQ (变废为宝),1. 对比： AWQ (激活感知) vs GPTQ (逐层重构) 的区别。2. 实战： 跑一个量化 Demo，记录显存节省比例。3. 结合CV： 提一下你以前做 CV 模型量化的经验（PTQ/QAT）。,“你有过落地的性能优化经验吗？”“量化对精度影响大吗？怎么弥补？”
+Done,P1 (调度),服务优化,Dynamic Batching (动态批处理),1. 概念： 区别 Static Batching (等齐了再跑) vs Continuous Batching (随到随跑，vLLM 核心)。2. 话术： 准备一个比喻（像是公交车 vs 拼车）。,“如何提升推理服务的吞吐量 (Throughput)？”“什么是 Iteration-level scheduling？”
 Done,P1 (并行),模型切分,Megatron-LM (TP Only),1. 聚焦推理： 只看 Tensor Parallel (TP) 在推理时怎么切分权重（列切/行切）。2. 通信： 知道 TP 推理在每一层结束后需要 All-Reduce。3. 忽略训练： 不看流水线气泡。,“70B 的模型一张卡放不下，推理时怎么切？”“TP 通信发生在哪些算子之间？”
 ,P1 (谈资),前沿技术,Speculative Decoding (投机采样),1. 原理： 用小模型（Draft Model）快速生成，大模型（Target Model）验证。2. 场景： 知道这适合“访存密集型”场景，能提升延迟。,“JD 里提到的‘投机预测’你了解吗？”
 ,P1 (技能),性能分析,Nsight Systems (nsys) 推理版,1. 侧重： 关注 Kernel Launch Overhead 和 KV Cache 读取延迟。2. 话术： “我用 nsys 分析发现主要瓶颈在 Attention 的 Memory Bound...”,“怎么定位推理延迟过高的问题？”
